@@ -60,7 +60,7 @@
         async function handleSubmit(e) {
             // We do not want the form to submit the input data to the server unmanaged
             // (that would reload the page).
-            // Instaed, we want to handle ourselves the request via AJAX.
+            // Instead, we want to handle ourselves the request via AJAX.
             e.preventDefault()
 
             const bodyObject = {
@@ -78,6 +78,9 @@
                     // To Create a new resource, we use the "POST" method.
                     method: "POST",
                     headers: {
+                        // Authorization header identifying your user
+                        // "Authorization": "Bearer A_VERY_LONG_STRING_1234567890",
+
                         // If you forget to tell the server that you are sending JSON, it will not understand
                         // It will not be able to parse your body
                         "Content-Type": "application/json"
