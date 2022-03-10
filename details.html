@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <style>
+        img[alt='agenda-pic'] {
+            height: 30vh;
+            width: 100%;
+            object-fit: cover;
+        }
+    </style>
+    <title>Hello, world!</title>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="./index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/backoffice.html">Backoffice</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <img class="img-fluid"
+            src="https://images.unsplash.com/photo-1529651737248-dad5e287768e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1301&q=80"
+            alt="agenda-pic">
+    </div>
+
+    <div class="container">
+        <div class="spinner-grow text-primary d-block mx-auto my-5" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="d-none row">
+            <div class="col-12 col-md-8 mx-auto my-2 d-flex justify-content-center align-items-center">
+                <h1 class="text-center d-inline">Event name
+                </h1>
+                <a class="badge bg-warning text-dark ms-3">Edit</a>
+            </div>
+            <div class="col-12 col-md-6 mx-auto d-flex flex-column">
+                <p></p>
+                <button class="btn btn-primary"></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const eventId = (new URLSearchParams(window.location.search)).get('id');
+
+        const eventName = document.querySelector('.row > div:first-child h1')
+        const eventEdit = document.querySelector('.row > div:first-child h1 + a')
+        const eventDescription = document.querySelector('.row > div:nth-of-type(2) p')
+        const eventPrice = document.querySelector('.row > div:nth-of-type(2) button')
+
+        const spinner = document.querySelector('.spinner-grow')
+        const row = document.querySelector('.row')
+
+        window.onload = async function () {
+
+            try {
+                const response = await fetch("http://striveschool-api.herokuapp.com/api/agenda/" + eventId)
+                const data = await response.json()
+
+                eventName.innerHTML = data.name
+                eventDescription.innerHTML = data.description
+                eventPrice.innerText = data.price
+                eventEdit.href = "/backoffice.html?id=" + data._id
+
+            } catch (error) {
+
+                console.log(error)
+
+                eventName.innerHTML = "Error. Please try again later..."
+                alert('Something went wrong with the fetch.')
+            } finally {
+                spinner.classList.add('d-none')
+                row.classList.remove('d-none')
+            }
+
+        }
+    </script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

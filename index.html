@@ -59,9 +59,10 @@
             const data = await response.json()
 
             listGroup.innerHTML = data.map(event => `
-                <li class="list-group-item d-flex">
-                    ${event.name}
-                    <span class="badge bg-dark ms-auto">${event.price}</span>
+                <li class="list-group-item d-flex align-items-center ">
+                    <a href='/backoffice.html?id=${event._id}'>${event.name}</a>
+                    <span class="badge text-black ms-auto">${event.price}</span>
+                    <a href='/details.html?id=${event._id}' class="btn btn-primary">See details</a>
                 </li>
             `).join('')
         }
